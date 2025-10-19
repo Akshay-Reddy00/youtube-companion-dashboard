@@ -8,11 +8,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const api = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/auth/register", { email, password });
+      await axios.post(`${api}/auth/register`, { email, password });
       setSuccess("Registration successful! You can login now.");
       setError("");
       setEmail("");
