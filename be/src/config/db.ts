@@ -12,9 +12,6 @@ export async function dbConnect() {
 }
 
 export function validateEnv() {
-    if(!process.env.ALLOWED_ORIGIN) {
-        throw new Error("ALLOWED_ORIGIN env is not defined");
-    }
     if(!process.env.JWT_SECRET) {
         throw new Error("JWT_SECRET env is not defined");
     }
