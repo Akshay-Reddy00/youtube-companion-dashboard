@@ -25,8 +25,4 @@ app.use('/videos', videoRoutes);
 app.use('/comments', commentRoutes);
 app.use('/notes', noteRoutes);
 
-// only for dev
-// app.listen(3000);
-
-// Vercel expects a serverless function handler
-export default app;
+app.listen(3000);
