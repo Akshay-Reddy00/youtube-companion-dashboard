@@ -1,1 +1,1 @@
-export const BE_URL = "http://localhost:3000"
+export const BE_URL = import.meta.env.VITE_API_URL; // VITE requires to use import.meta instead of process.env

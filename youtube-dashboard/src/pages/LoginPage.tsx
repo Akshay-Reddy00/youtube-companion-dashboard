@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import { useNavigate, Link } from "react-router-dom";
+import { BE_URL } from "../utils/const";
 
 const LoginPage = () => {
   const { setToken } = useContext(AuthContext);
@@ -9,7 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const api = process.env.REACT_APP_API_URL;
+  const api = BE_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

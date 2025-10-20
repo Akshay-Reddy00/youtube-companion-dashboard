@@ -5,10 +5,19 @@ import 'dotenv/config';
 export async function dbConnect() {
     try{
         await mongoose.connect(`${process.env.MONGO_URL}`);
-        console.log('***** Connected to DB *****');
+        console.log('Connected to DB');
     } catch(e){
         console.error('Error connecting to DB', e);
     }
 }
 
-dbConnect();
+export function validateEnv() {
+    if(!process.env.ALLOWED_ORIGIN) {
+        throw new Error("ALLOWED_ORIGIN env is not defined");
+    }
+    if(!process.env.JWT_SECRET) {
+        throw new Error("JWT_SECRET env is not defined");
+    }
+    console.log('******************************')
+    console.log('ALLOWED_ORIGIN: ', process.env.ALLOWED_ORIGIN);
+}

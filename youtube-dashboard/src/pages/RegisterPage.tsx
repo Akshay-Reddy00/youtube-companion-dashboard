@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { BE_URL } from "../utils/const";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const api = process.env.REACT_APP_API_URL;
+  const api = BE_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

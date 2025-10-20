@@ -1,15 +1,19 @@
 import express from "express";
 import cors from "cors";
-import { dbConnect } from "./config/db";
+import { dbConnect, validateEnv } from "./config/db";
 import authRoutes from './routes/authRoute';
 import videoRoutes from './routes/videoRoute';
 import commentRoutes from './routes/commentRoute';
 import noteRoutes from './routes/noteRoute';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: process.env.ALLOWED_ORIGIN, // add frontend's endpoint in .env file
+    credentials: true
+}));
 app.use(express.json());
 dbConnect();
+validateEnv();
 
 app.get("/", (req, res) => {
     res.send("Youtube Dashboard API is running");
@@ -20,4 +24,8 @@ app.use('/videos', videoRoutes);
 app.use('/comments', commentRoutes);
 app.use('/notes', noteRoutes);
 
-app.listen(3000);
+// only for dev
+// app.listen(3000);
+
+// Vercel expects a serverless function handler
+export default app;

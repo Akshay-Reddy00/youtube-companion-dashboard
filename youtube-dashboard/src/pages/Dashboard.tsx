@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
+import { BE_URL } from "../utils/const";
 
 interface Video {
   _id: string;
@@ -36,7 +37,7 @@ const Dashboard = () => {
   const [noteTags, setNoteTags] = useState("");
 
   const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: BE_URL,
     headers: { Authorization: `Bearer ${token}` },
   });
 
