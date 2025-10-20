@@ -7,8 +7,9 @@ import commentRoutes from './routes/commentRoute';
 import noteRoutes from './routes/noteRoute';
 
 const app = express();
+const allowedOrigin = ["https://youtube-companion-dashboard-two.vercel.app/", "http://localhost:3000"]
 app.use(cors({
-    origin: process.env.ALLOWED_ORIGIN, // add frontend's endpoint in .env file
+    origin: allowedOrigin, // add frontend's endpoint in .env file
     credentials: true
 }));
 app.use(express.json());
