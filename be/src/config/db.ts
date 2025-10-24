@@ -16,5 +16,5 @@ export function validateEnv() {
         throw new Error("JWT_SECRET env is not defined");
     }
     console.log('******************************')
-    console.log('ALLOWED_ORIGIN: ', process.env.ALLOWED_ORIGIN);
+    
 }
