@@ -1,8 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BE_URL } from "../utils/const";
-import { Button, InputBox, Heading, SubHeading, ErrorMessage, SuccessMessage } from "../components";
+import { Heading } from "../components/Heading";
+import { SubHeading } from "../components/SubHeading";
+import { InputBox } from "../components/InputBox";
+import { Button } from "../components/Button";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { SuccessMessage } from "../components/SuccessMessage";
+import { Warning } from "../components/Warning";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -18,7 +24,6 @@ const RegisterPage = () => {
     setError("");
     setSuccess("");
 
-    // Validate password length
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
       setLoading(false);
@@ -31,7 +36,7 @@ const RegisterPage = () => {
       setError("");
       setEmail("");
       setPassword("");
-      setTimeout(() => navigate("/login"), 2000);
+      navigate("/login");
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
       setSuccess("");
@@ -41,13 +46,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <div className="rounded-lg bg-zinc-900 w-full text-center p-6 border border-gray-800">
+    <div className="h-screen bg-black flex justify-center">
+      <div className="flex flex-col justify-center">
+        <div className="rounded-lg bg-gray-900 w-96 text-center p-2 h-max px-4">
+
           <Heading label="Sign Up" />
           <SubHeading label="Start managing your YouTube videos" />
           
-          <div className="space-y-4">
             <InputBox 
               onChange={e => setEmail(e.target.value)} 
               label="Email" 
@@ -62,33 +67,20 @@ const RegisterPage = () => {
               type="password"
             />
             
-            <div className="pt-2">
+            <div className="pt-4">
               <Button 
                 label={loading ? "Creating account..." : "Sign Up"} 
                 onClick={handleSignUp}
-                variant="primary"
               />
             </div>
             
             {error && <ErrorMessage message={error} />}
             {success && <SuccessMessage message={success} />}
             
-            <div className="pt-2 text-sm text-gray-400">
-              Already have an account?{" "}
-              <Link to="/login" className="text-green-500 hover:text-green-400 underline font-medium">
-                Log in
-              </Link>
-            </div>
-            
-            <div className="text-center">
-              <Link to="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                ← Back to Home
-              </Link>
-            </div>
+            <Warning label={"Already have an account?"} linkText={"Sign in"} to={"/login"} />
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

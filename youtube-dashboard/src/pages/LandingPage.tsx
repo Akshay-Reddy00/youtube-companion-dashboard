@@ -28,11 +28,11 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="w-full px-6 py-16">
+      <section className="w-full px-6 py-12">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
           <h1 className="text-3xl md:text-4xl font-semibold text-white mb-4 leading-relaxed">
             Manage Your YouTube Video
-            <span className="block text-gray-400 font-normal mt-2">
+            <span className="block text-gray-300 font-normal mt-2">
               Like Never Before
             </span>
           </h1>
@@ -46,10 +46,10 @@ const LandingPage = () => {
       {/* Features Grid */}
       <section id="features" className="w-full px-6 py-16 flex justify-center">
         <div className="w-full max-w-6xl flex flex-col items-center">
-          <h2 className="text-3xl font-bold text-white text-center mb-24">
+          <h2 className="text-3xl font-bold text-white text-center mb-20">
             Everything You Need to Excel
           </h2>
-          <div className="flex flex-wrap justify-center items-start gap-12">
+          <div className="flex flex-wrap justify-center items-start gap-16">
             
             {/* Feature 1 */}
             <div className="flex flex-col items-center justify-center text-center w-56">
@@ -92,9 +92,9 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works */}
-      <section className="w-full px-6 py-16 mt-2 flex justify-center">
+      <section className="w-full px-6 py-10 mt-2 flex justify-center">
         <div className="w-full max-w-4xl flex flex-col items-center">
-          <h2 className="text-3xl font-bold text-white text-center mb-24">
+          <h2 className="text-3xl font-bold text-white text-center mb-16">
             How It Works
           </h2>
           <div className="w-full flex flex-col items-center gap-1">
@@ -106,7 +106,7 @@ const LandingPage = () => {
                 <div className="text-center flex-1">
                   <h3 className="text-lg font-bold text-white mb-1">Upload to YouTube</h3>
                   <p className="text-gray-400 text-sm">
-                    Upload your unlisted video to YouTube directly (not via API).
+                    Paste a video url from YouTube directly.
                   </p>
                 </div>
               </div>
@@ -134,7 +134,7 @@ const LandingPage = () => {
                 <div className="text-center flex-1">
                   <h3 className="text-lg font-bold text-white mb-1">Manage & Improve</h3>
                   <p className="text-gray-400 text-sm">
-                    Add notes, internal comments, update metadata, and track your improvements.
+                    Add notes, internal comments, tagging for better search, and track your improvements.
                   </p>
                 </div>
               </div>
@@ -144,7 +144,7 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full px-6 py-20 flex-grow">
+      <section className="w-full px-6 py-16 flex-grow">
         <div className="max-w-4xl mx-auto flex justify-center items-center">
           <div className="border border-gray-700 rounded-2xl p-12 max-w-3xl text-center">
             <h2 className="text-3xl font-semibold text-white mb-8">
@@ -158,7 +158,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="w-full px-6 py-6 border-t border-white/10">
+      <footer className="w-full px-2 py-2 border-t border-white/10">
         <div className="max-w-7xl mx-auto flex justify-center items-center">
           <p className="text-gray-400 text-sm">
             © 2025 YouTube Mini Dashboard. All rights reserved.

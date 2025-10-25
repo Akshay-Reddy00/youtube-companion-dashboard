@@ -1,9 +1,14 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BE_URL } from "../utils/const";
-import { Button, InputBox, Heading, SubHeading, ErrorMessage } from "../components";
+import { Heading } from "../components/Heading";
+import { SubHeading } from "../components/SubHeading";
+import { InputBox } from "../components/InputBox";
+import { Button } from "../components/Button";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { Warning } from "../components/Warning";
 
 const LoginPage = () => {
   const { setToken } = useContext(AuthContext);
@@ -30,13 +35,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <div className="rounded-lg bg-zinc-900 w-full text-center p-6 border border-gray-800">
+    <div className="h-screen bg-black flex justify-center">
+      <div className="flex flex-col justify-center">
+        <div className="rounded-lg bg-gray-900 w-96 text-center p-2 h-max px-4">
+
           <Heading label="Log In" />
-          <SubHeading label="Welcome back to your dashboard" />
+          <SubHeading label="Enter your credentials to access your account" />
           
-          <div className="space-y-4">
             <InputBox 
               onChange={e => setEmail(e.target.value)} 
               label="Email" 
@@ -46,37 +51,26 @@ const LoginPage = () => {
             
             <InputBox 
               onChange={e => setPassword(e.target.value)} 
-              label="Password" 
+              label="Password"
               placeholder="Enter your password"
               type="password"
             />
             
-            <div className="pt-2">
+            <div className="pt-4">
               <Button 
                 label={loading ? "Logging in..." : "Log In"} 
                 onClick={handleLogin}
-                variant="primary"
               />
             </div>
             
             {error && <ErrorMessage message={error} />}
             
-            <div className="pt-2 text-sm text-gray-400">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-green-500 hover:text-green-400 underline font-medium">
-                Sign up
-              </Link>
-            </div>
+            <Warning label={"Don't have an account?"} linkText={"Sign up"} to={"/register"} />
             
-            <div className="text-center">
-              <Link to="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                ← Back to Home
-              </Link>
-            </div>
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 

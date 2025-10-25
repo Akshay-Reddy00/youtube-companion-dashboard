@@ -51,7 +51,7 @@ const Dashboard = () => {
       }
     }
     fetchVideos();
-  }, [token]);
+  }, [api]);
 
   const loadDetails = async (video: Video) => {
     setSelectedVideo(video);

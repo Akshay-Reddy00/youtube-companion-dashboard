@@ -1,6 +1,6 @@
 export function ErrorMessage({message}: {message: string}){
     return (
-        <div className="font-semibold text-sm text-red-500 mt-2">
+        <div className="font-semibold text-sm text-red-600">
             {message}
         </div>
     );
