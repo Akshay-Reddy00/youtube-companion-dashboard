@@ -24,6 +24,12 @@ const RegisterPage = () => {
     setError("");
     setSuccess("");
 
+    if(!email.includes("@")) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
       setLoading(false);

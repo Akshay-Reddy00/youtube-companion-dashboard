@@ -8,6 +8,7 @@ import { SubHeading } from "../components/SubHeading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
+import { SuccessMessage } from "../components/SuccessMessage";
 import { Warning } from "../components/Warning";
 
 const LoginPage = () => {
@@ -16,15 +17,32 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const api = BE_URL;
 
   const handleLogin = async () => {
     setLoading(true);
     setError("");
+
+    if(!email.includes("@")) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      setLoading(false);
+      return;
+    }
     
     try {
       const res = await axios.post(`${api}/auth/login`, { email, password });
+      setSuccess("Login successful! Redirecting to dashboard...");
+      setError("");
+      setEmail("");
+      setPassword("");
       setToken(res.data.token);
       navigate("/dashboard");
     } catch (err: any) {
@@ -64,6 +82,7 @@ const LoginPage = () => {
             </div>
             
             {error && <ErrorMessage message={error} />}
+            {success && <SuccessMessage message={success} />}
             
             <Warning label={"Don't have an account?"} linkText={"Sign up"} to={"/register"} />
             

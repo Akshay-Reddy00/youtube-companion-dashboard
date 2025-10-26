@@ -2,16 +2,14 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import { BE_URL } from "../utils/const";
+import { VideoFetcher } from "../components/VideoExtractor";
 
 interface Video {
   _id: string;
+  videoId: string;
   title: string;
-  channelTitle: string;
-  publishedAt: string;
-  viewCount: number;
-  likeCount: number;
-  dislikeCount: number;
-  thumbnailUrl: string;
+  description?: string;
+  createdAt?: string;
 }
 
 interface Comment {
@@ -36,30 +34,32 @@ const Dashboard = () => {
   const [noteText, setNoteText] = useState("");
   const [noteTags, setNoteTags] = useState("");
 
-  const api = axios.create({
-    baseURL: BE_URL,
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
   useEffect(() => {
     async function fetchVideos() {
+      if (!token) return;
       try {
-        const res = await api.get("/videos");
+        const res = await axios.get(`${BE_URL}/videos`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setVideos(res.data);
       } catch (err) {
         console.error(err);
       }
     }
     fetchVideos();
-  }, [api]);
+  }, [token]);
 
   const loadDetails = async (video: Video) => {
     setSelectedVideo(video);
     try {
-      const commentsRes = await api.get(`/comments?videoId=${video._id}`);
+      const commentsRes = await axios.get(`${BE_URL}/comments?videoId=${video._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setComments(commentsRes.data);
 
-      const notesRes = await api.get(`/notes?videoId=${video._id}`);
+      const notesRes = await axios.get(`${BE_URL}/notes?videoId=${video._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setNotes(notesRes.data);
     } catch (err) {
       console.error(err);
@@ -69,7 +69,10 @@ const Dashboard = () => {
   const handleAddComment = async () => {
     if (!commentText.trim() || !selectedVideo) return;
     try {
-      await api.post("/comments", { videoId: selectedVideo._id, text: commentText });
+      await axios.post(`${BE_URL}/comments`, 
+        { videoId: selectedVideo._id, text: commentText },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setCommentText("");
       loadDetails(selectedVideo);
     } catch (err) {
@@ -81,7 +84,10 @@ const Dashboard = () => {
     if (!noteText.trim() || !selectedVideo) return;
     try {
       const tagsArray = noteTags.split(",").map(t => t.trim()).filter(Boolean);
-      await api.post("/notes", { videoId: selectedVideo._id, text: noteText, tags: tagsArray });
+      await axios.post(`${BE_URL}/notes`, 
+        { videoId: selectedVideo._id, text: noteText, tags: tagsArray },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setNoteText("");
       setNoteTags("");
       loadDetails(selectedVideo);
@@ -103,19 +109,28 @@ const Dashboard = () => {
 
       <main className="flex flex-1">
         <section className="w-1/3 overflow-auto border-r border-gray-300 p-4">
+          <VideoFetcher
+            onVideoFetched={(newVideo: Video) => {
+              setVideos((prev) => [newVideo, ...prev]);
+              setSelectedVideo(newVideo);
+            }}
+          />
+
           <h2 className="text-lg font-semibold mb-4">Videos</h2>
-          {videos.map(video => (
+          {videos.map((video) => (
             <div
               key={video._id}
               onClick={() => loadDetails(video)}
-              className={`cursor-pointer p-2 rounded mb-2 ${selectedVideo?._id === video._id ? "bg-blue-100" : ""}`}
+              className={`cursor-pointer p-2 rounded mb-2 border ${
+                selectedVideo?._id === video._id ? "bg-blue-100 border-blue-300" : "border-gray-300"
+              }`}
             >
-              <img src={video.thumbnailUrl} alt={video.title} className="w-full rounded mb-1" />
               <h3 className="font-semibold">{video.title}</h3>
-              <p className="text-sm text-gray-600">{video.channelTitle}</p>
+              <p className="text-sm text-gray-600">{video.description}</p>
             </div>
           ))}
         </section>
+
 
         <section className="flex-1 p-6 overflow-auto">
           {!selectedVideo ? (

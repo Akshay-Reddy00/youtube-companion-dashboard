@@ -3,9 +3,10 @@ interface IInputBoxProps {
     placeholder: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type?: string;
+    error?: string;
 }
 
-export function InputBox({label, placeholder, onChange, type = "text"}: IInputBoxProps){
+export function InputBox({label, placeholder, onChange, type = "text", error}: IInputBoxProps){
     return (
         <div>
             <div className="text-sm font-medium text-left py-2 text-gray-300">
@@ -15,7 +16,8 @@ export function InputBox({label, placeholder, onChange, type = "text"}: IInputBo
                 onChange={onChange} 
                 placeholder={placeholder} 
                 type={type}
-                className="w-full px-3 py-2 border border-gray-700 rounded-md font-normal bg-black text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                className={`w-full px-3 py-2 border border-gray-700 rounded-md font-normal bg-black text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                    ${error ? "border-red-500 focus:border-red-500" : "border-gray-700 focus:border-green-500"}`}
             />
         </div>
     );
